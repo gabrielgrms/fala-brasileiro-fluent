@@ -2,17 +2,17 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Task, CreateTaskRequest, UpdateTaskRequest } from '@/types/task';
 
-const API_BASE_URL = 'http://localhost:3000/api'; // Ajuste conforme sua API
+const API_BASE_URL = 'http://localhost:8000'; // Ajuste conforme sua API
 
 const api = {
   getTasks: async (): Promise<Task[]> => {
-    const response = await fetch(`${API_BASE_URL}/tasks`);
+    const response = await fetch(`${API_BASE_URL}/tarefas`);
     if (!response.ok) throw new Error('Erro ao buscar tarefas');
     return response.json();
   },
 
   createTask: async (task: CreateTaskRequest): Promise<Task> => {
-    const response = await fetch(`${API_BASE_URL}/tasks`, {
+    const response = await fetch(`${API_BASE_URL}/tarefas`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(task),
@@ -22,7 +22,7 @@ const api = {
   },
 
   updateTask: async (id: string, updates: UpdateTaskRequest): Promise<Task> => {
-    const response = await fetch(`${API_BASE_URL}/tasks/${id}`, {
+    const response = await fetch(`${API_BASE_URL}/tarefas/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(updates),
@@ -32,7 +32,7 @@ const api = {
   },
 
   deleteTask: async (id: string): Promise<void> => {
-    const response = await fetch(`${API_BASE_URL}/tasks/${id}`, {
+    const response = await fetch(`${API_BASE_URL}/tarefas/${id}`, {
       method: 'DELETE',
     });
     if (!response.ok) throw new Error('Erro ao deletar tarefa');
