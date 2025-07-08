@@ -1,8 +1,7 @@
-
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Task, CreateTaskRequest, UpdateTaskRequest } from '@/types/task';
 
-const API_BASE_URL = 'http://localhost:8000'; // Ajuste conforme sua API
+const API_BASE_URL = 'https://bed4e8a78af8.ngrok-free.app'; // URL base atualizada
 
 const api = {
   getTasks: async (): Promise<Task[]> => {
