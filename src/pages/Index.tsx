@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useTasks } from '@/hooks/useTasks';
 import { TaskForm } from '@/components/TaskForm';
@@ -89,11 +88,11 @@ const Index = () => {
     }
   };
 
-  const handleToggleComplete = (id: string, completed: boolean) => {
-    toggleComplete(id, completed);
+  const handleToggleComplete = (id: string, status: 'pendente' | 'concluida') => {
+    toggleComplete(id, status);
     toast({
-      title: completed ? "Tarefa concluída!" : "Tarefa reaberta",
-      description: completed 
+      title: status === 'concluida' ? "Tarefa concluída!" : "Tarefa reaberta",
+      description: status === 'concluida' 
         ? "Parabéns por concluir a tarefa!" 
         : "Tarefa marcada como pendente.",
     });

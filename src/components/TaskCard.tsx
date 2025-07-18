@@ -10,7 +10,7 @@ interface TaskCardProps {
   task: Task;
   onEdit: (task: Task) => void;
   onDelete: (id: string) => void;
-  onToggleComplete: (id: string, completed: boolean) => void;
+  onToggleComplete: (id: string, status: 'pendente' | 'concluida') => void;
   isLoading?: boolean;
 }
 
@@ -29,37 +29,40 @@ export const TaskCard = ({
     }
   };
 
-  console.log('TaskCard render - Task ID:', task.id, 'Completed:', task.completed);
+  const isCompleted = task.status === 'concluida';
+
+  console.log('TaskCard render - Task ID:', task.id, 'Status:', task.status, 'IsCompleted:', isCompleted);
 
   const handleToggleComplete = () => {
-    console.log('Toggle complete clicked - Task ID:', task.id, 'Current completed:', task.completed, 'New completed:', !task.completed);
-    onToggleComplete(task.id, !task.completed);
+    const newStatus = isCompleted ? 'pendente' : 'concluida';
+    console.log('Toggle complete clicked - Task ID:', task.id, 'Current status:', task.status, 'New status:', newStatus);
+    onToggleComplete(task.id, newStatus);
   };
 
   return (
     <Card className={`transition-all duration-200 ${
-      task.completed 
+      isCompleted 
         ? 'opacity-70 bg-muted/50 border-green-500 border-2' 
         : ''
     }`}>
       <CardHeader className="pb-3">
-        <CardTitle className={`text-lg ${task.completed ? 'line-through text-muted-foreground' : ''}`}>
+        <CardTitle className={`text-lg ${isCompleted ? 'line-through text-muted-foreground' : ''}`}>
           {task.title}
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         {task.description && (
-          <p className={`text-sm ${task.completed ? 'line-through text-muted-foreground' : 'text-gray-600'}`}>
+          <p className={`text-sm ${isCompleted ? 'line-through text-muted-foreground' : 'text-gray-600'}`}>
             {task.description}
           </p>
         )}
         
         <div className="flex items-center justify-between">
-          <span className={`text-sm ${task.completed ? 'text-muted-foreground' : 'text-gray-500'}`}>
+          <span className={`text-sm ${isCompleted ? 'text-muted-foreground' : 'text-gray-500'}`}>
             Entrega: {formatDate(task.dueDate)}
           </span>
           
-          {task.completed && (
+          {isCompleted && (
             <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">
               Concluída
             </span>
@@ -67,7 +70,7 @@ export const TaskCard = ({
         </div>
         
         <div className="flex justify-end space-x-2 pt-2">
-          {!task.completed && (
+          {!isCompleted && (
             <>
               <Button
                 size="sm"

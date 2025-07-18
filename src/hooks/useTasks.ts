@@ -76,9 +76,9 @@ export const useTasks = () => {
     },
   });
 
-  const toggleComplete = (id: string, completed: boolean) => {
-    console.log('toggleComplete called - ID:', id, 'Completed:', completed);
-    updateMutation.mutate({ id, updates: { completed } });
+  const toggleComplete = (id: string, status: 'pendente' | 'concluida') => {
+    console.log('toggleComplete called - ID:', id, 'Status:', status);
+    updateMutation.mutate({ id, updates: { status } });
   };
 
   return {
