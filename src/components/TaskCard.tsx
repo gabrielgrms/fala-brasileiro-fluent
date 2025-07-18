@@ -29,6 +29,13 @@ export const TaskCard = ({
     }
   };
 
+  console.log('TaskCard render - Task ID:', task.id, 'Completed:', task.completed);
+
+  const handleToggleComplete = () => {
+    console.log('Toggle complete clicked - Task ID:', task.id, 'Current completed:', task.completed, 'New completed:', !task.completed);
+    onToggleComplete(task.id, !task.completed);
+  };
+
   return (
     <Card className={`transition-all duration-200 ${
       task.completed 
@@ -65,7 +72,7 @@ export const TaskCard = ({
               <Button
                 size="sm"
                 variant="default"
-                onClick={() => onToggleComplete(task.id, !task.completed)}
+                onClick={handleToggleComplete}
                 disabled={isLoading}
                 className="h-8"
               >

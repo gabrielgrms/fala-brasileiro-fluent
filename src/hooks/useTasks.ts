@@ -1,3 +1,4 @@
+
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Task, CreateTaskRequest, UpdateTaskRequest } from '@/types/task';
 
@@ -21,13 +22,16 @@ const api = {
   },
 
   updateTask: async (id: string, updates: UpdateTaskRequest): Promise<Task> => {
+    console.log('API updateTask - ID:', id, 'Updates:', updates);
     const response = await fetch(`${API_BASE_URL}/tarefas/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(updates),
     });
     if (!response.ok) throw new Error('Erro ao atualizar tarefa');
-    return response.json();
+    const result = await response.json();
+    console.log('API updateTask response:', result);
+    return result;
   },
 
   deleteTask: async (id: string): Promise<void> => {
@@ -73,6 +77,7 @@ export const useTasks = () => {
   });
 
   const toggleComplete = (id: string, completed: boolean) => {
+    console.log('toggleComplete called - ID:', id, 'Completed:', completed);
     updateMutation.mutate({ id, updates: { completed } });
   };
 
