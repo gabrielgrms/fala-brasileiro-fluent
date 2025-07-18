@@ -30,7 +30,11 @@ export const TaskCard = ({
   };
 
   return (
-    <Card className={`transition-all duration-200 ${task.completed ? 'opacity-70 bg-muted/50' : ''}`}>
+    <Card className={`transition-all duration-200 ${
+      task.completed 
+        ? 'opacity-70 bg-muted/50 border-green-500 border-2' 
+        : ''
+    }`}>
       <CardHeader className="pb-3">
         <CardTitle className={`text-lg ${task.completed ? 'line-through text-muted-foreground' : ''}`}>
           {task.title}
@@ -56,26 +60,30 @@ export const TaskCard = ({
         </div>
         
         <div className="flex justify-end space-x-2 pt-2">
-          <Button
-            size="sm"
-            variant={task.completed ? "secondary" : "default"}
-            onClick={() => onToggleComplete(task.id, !task.completed)}
-            disabled={isLoading}
-            className="h-8"
-          >
-            <Check className="h-4 w-4 mr-1" />
-            {task.completed ? 'Reabrir' : 'Concluir'}
-          </Button>
-          
-          <Button
-            size="sm"
-            variant="outline"
-            onClick={() => onEdit(task)}
-            disabled={isLoading}
-            className="h-8"
-          >
-            <Edit className="h-4 w-4" />
-          </Button>
+          {!task.completed && (
+            <>
+              <Button
+                size="sm"
+                variant="default"
+                onClick={() => onToggleComplete(task.id, !task.completed)}
+                disabled={isLoading}
+                className="h-8"
+              >
+                <Check className="h-4 w-4 mr-1" />
+                Concluir
+              </Button>
+              
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => onEdit(task)}
+                disabled={isLoading}
+                className="h-8"
+              >
+                <Edit className="h-4 w-4" />
+              </Button>
+            </>
+          )}
           
           <Button
             size="sm"
